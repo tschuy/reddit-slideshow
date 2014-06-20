@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>{{ "/r/" + subreddit }}</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}" />
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
+    {% if timer %}
+    <script type="text/javascript">
+    setTimeout(function(){
+        window.location.reload(1);
+    }, {{ timer * 1000 }});
+    </script>
+    {% endif %}
+</head>
+<body>
+    <div id="body">
+        <img src="{{ url }}" alt="" />
+    </div>
+    <div id="header">
+        <a href="http://tschuy.com/">Evan Tschuy</a> | <a href="http://github.com/tschuy">GitHub</a>
+    </div>
+    <div id="footer">
+        <span id="title"><a href="{{ permalink }}" target="_blank">{{ title }}</a> by {{ user }}</span>
+        <span id="subheading"><a href="{{ url }}" target="_blank">View full image</a></span>
+        <span id="permalink"><a href="{{ url_for('permalink') + "?url=" + permalink }}">Permalink</a></span>
+        <span id="subreddit"><a href="{{ "http://reddit.com/r/" + subreddit }}" target="_blank">{{ "/r/" + subreddit }}</a></span>
+    </div>
+</body>
+</html>
