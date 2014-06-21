@@ -44,9 +44,20 @@ def subredditPage(subreddit):
         return 0
     return index(subreddit=subreddit)
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+@app.errorhandler(500)
+def server_error(e):
+    return render_template('500.html'), 500
+
 @app.route('/permalink')
 def permalink():
     link = request.args.get('url')
+    if not link:
+        return page_not_found()
+
     data = getImgDetailsFromUrl(link)
 
     if data == None:
@@ -68,4 +79,4 @@ def permalink():
     )
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

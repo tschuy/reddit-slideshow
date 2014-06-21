@@ -1,0 +1,8 @@
+{% extends "layout.html" %}
+{% block title %}File not found{% endblock %}
+{% block timer %}{% endblock %}
+{% block body %}<img src="{{ url_for('static', filename='404.png') }}" alt="" />{% endblock %}
+{% block footer %}
+        <a href="{{ url_for(endpoint='index') }}"><span id="title">404! File not found. </span>
+        <span id="subheading"> Click to go home.</span></a>
+{% endblock %}

@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}" />
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
+    {% block timer %}{% endblock %}
+</head>
+<body>
+    <div id="body">
+    {% block body %}{% endblock %}
+    </div>
+    <div id="header">
+        <a href="http://tschuy.com/">Evan Tschuy</a> | <a href="http://github.com/tschuy">GitHub</a>
+    </div>
+    <div id="footer">
+        {% block footer %}{% endblock %}
+    </div>
+</body>
+</html>
