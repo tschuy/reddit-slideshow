@@ -1,14 +1,46 @@
 {% extends "layout.html" %}
 {% block title %}{{ "/r/" + subreddit }}{% endblock %}
 
-{% block timer %}
+{% block javascript %}
+<script type="text/javascript">
+    function subredditRedirect() {
+        {% if timer %}
+        var timer = "?timer={{ timer }}";
+        {% else %}
+        var timer = "";
+        {% endif %}
+        var chosensub = prompt("Browse photos from:","{{ subreddit }}");
+        if (chosensub != null) {
+            window.location.href = "{{ url_for(endpoint='index') }}" + chosensub + timer;
+        }
+    }
+    function setTimer() {
+        {% if timer %}
+        var url = document.URL;
+        var url = url.slice(0, url.length - "?timer={{ timer }}".length);
+        {% else %}
+        var url = document.URL;
+        {% endif %}
+        var timer_val = prompt("Timer duration (in seconds):","{% if timer %}{{ timer }}{% else %}10{% endif %}");
+        if (!isNaN(timer_val) && timer_val != "" && timer_val != 0) {
+            window.location.href = url + "?timer=" + timer_val;
+        }
+        else {
+            window.location.href = url;
+        }
+    }
+
     {% if timer %}
-    <script type="text/javascript">
     setTimeout(function(){
         window.location.reload(1);
     }, {{ timer * 1000 }});
-    </script>
     {% endif %}
+</script>
+{% endblock %}
+
+{% block left_header %}<a href="#" onclick="subredditRedirect();return false;">Subreddit: /r/{{ subreddit }}</a>
+<br />
+<a href="#" onclick="setTimer();return false;">{% if timer %}Timer: {{ timer }}{% else %}Set Timer{% endif %}</a>
 {% endblock %}
 
 {% block body %}
@@ -18,8 +50,8 @@
 {% endblock %}
 
 {% block footer %}
-        <span id="title"><a href="{{ permalink }}" target="_blank">{{ title }}</a> by {{ user }}</span>
+        <span id="title"><a href="{{ permalink }}" target="_blank">{{ title }}</a> by <a href="http://reddit.com/u/{{ user }}">{{ user }}</a></span>
         <span id="subheading"><a href="{{ url }}" target="_blank">View full image</a></span>
         <span id="permalink"><a href="{{ url_for('permalink') + "?url=" + permalink }}">Permalink</a></span>
-        <span id="subreddit"><a href="{{ "http://reddit.com/r/" + subreddit }}" target="_blank">{{ "/r/" + subreddit }}</a></span>
+        <span id="subreddit"><a href="{{ "http://reddit.com/r/" + subreddit }}" target="_blank">{{ "/r/" + subreddit }} on Reddit</a></span>
 {% endblock %}

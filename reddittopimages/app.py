@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, abort
 from functions import *
 import random
 
@@ -55,28 +55,25 @@ def server_error(e):
 @app.route('/permalink')
 def permalink():
     link = request.args.get('url')
-    if not link:
-        return page_not_found()
+    try:
+        data = getImgDetailsFromUrl(link + '.json')
 
-    data = getImgDetailsFromUrl(link)
+        url = data[u'url']
+        user = data[u'author']
+        title = data[u'title']
+        permalink = u"http://reddit.com" + data[u'permalink']
+        img_subreddit = data[u'subreddit']
 
-    if data == None:
-        return
-
-    url = data[u'url']
-    user = data[u'author']
-    title = data[u'title']
-    permalink = u"http://reddit.com" + data[u'permalink']
-    img_subreddit = data[u'subreddit']
-
-    return render_template(
-        'index.html',
-        url=url,
-        user=user,
-        title=title,
-        permalink=permalink,
-        subreddit=img_subreddit
-    )
+        return render_template(
+            'index.html',
+            url=url,
+            user=user,
+            title=title,
+            permalink=permalink,
+            subreddit=img_subreddit
+        )
+    except:
+        abort(404)
 
 if __name__ == '__main__':
     app.run(debug=True)

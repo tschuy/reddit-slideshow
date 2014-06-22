@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% block title %}Internal Server Error{% endblock %}
-{% block timer %}{% endblock %}
+{% block javascript %}{% endblock %}
+{% block left_header %}{% endblock %}
 {% block body %}{% endblock %}
 {% block footer %}
         <a href="{{ url_for(endpoint='index') }}"><span id="title">500 Internal Server error!</span>

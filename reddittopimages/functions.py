@@ -23,7 +23,6 @@ def updateCache(cache, subreddit):
 
 def getImgDetailsFromUrl(url):
     try:
-        url = url + ".json"
         r = urllib2.urlopen(url).read()
         data = json.loads(r)
 

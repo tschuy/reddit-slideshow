@@ -42,12 +42,19 @@ a:hover {
     min-height: 60px;
 }
 
-#header {
+.header {
         background-color: rgba(0, 0, 0, 0.6);
         position: fixed;
         top: 0;
-        right: 10px;
         font-size: 0.8em;
+}
+
+.right {
+	right: 10px;
+}
+
+.left {
+	left: 10px;
 }
 
 #title {
